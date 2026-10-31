@@ -1,0 +1,5 @@
+# Virtual game used by the stick-mode fit in Aim Lab: its stick dead zone (0..1) and camera speed at full deflection
+yaw_sign=1
+pitch_sign=-1
+game_deadzone=0.15
+game_max_dps=150

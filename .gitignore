@@ -1,0 +1,7 @@
+*.csv
+*.bak
+*.orig
+*.tmp
+__pycache__/
+out/
+last_result.json

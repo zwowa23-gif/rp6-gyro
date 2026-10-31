@@ -1,0 +1,24 @@
+diff --git a/src/libssc-sensor.c b/src/libssc-sensor.c
+index 5947dba..439a5ae 100644
+--- a/src/libssc-sensor.c
++++ b/src/libssc-sensor.c
+@@ -391,12 +391,16 @@ report_received (SSCClient *self, guint32 msg_id, guint64 uid_high, guint64 uid_
+ 						priv->available = attr_msg->attr[i]->value_array->v[0]->b;
+ 					break;
+ 				case SSC_ATTRIBUTE_SAMPLE_RATE:
+-					/* Only a single sample rate is supported for now. */
++					/* Use the highest advertised rate up to a cap: 400 Hz, or LIBSSC_RATE_<data type> (e.g. LIBSSC_RATE_accel=100). */
++					gchar *rate_env = g_strdup_printf ("LIBSSC_RATE_%s", priv->data_type);
++					const gchar *rate_cap_str = g_getenv (rate_env);
++					gfloat rate_cap = rate_cap_str ? (gfloat) g_ascii_strtod (rate_cap_str, NULL) : 400.0f;
++					g_free (rate_env);
+ 					for (gsize j = 0; j < attr_msg->attr[i]->value_array->n_v; j++) {
+ 						if (attr_msg->attr[i]->value_array->v[j]->has_f
+-						 && attr_msg->attr[i]->value_array->v[j]->f > 0) {
++						 && attr_msg->attr[i]->value_array->v[j]->f > priv->sample_rate
++						 && attr_msg->attr[i]->value_array->v[j]->f <= rate_cap) {
+ 							priv->sample_rate = attr_msg->attr[i]->value_array->v[j]->f;
+-							break;
+ 						}
+ 					}
+ 					break;

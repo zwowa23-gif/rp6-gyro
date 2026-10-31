@@ -1,0 +1,19 @@
+[Unit]
+Description=hexagonrpcd for the ADSP sensors PD (RP6 gyro)
+DefaultDependencies=no
+RequiresMountsFor=@PREFIX@
+After=systemd-udevd.service
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+Environment=HEXAGONRPCD_WRITE_DIR=@PREFIX@/qcom/_write
+Environment=LD_LIBRARY_PATH=@PREFIX@/out/prefix/lib/aarch64-linux-gnu
+# the node appears the moment the ADSP is up; the sensors PD needs the file server right away
+ExecStartPre=/bin/sh -c 'for i in $(seq 1 300); do [ -e /dev/fastrpc-adsp ] && exit 0; sleep 0.1; done; exit 1'
+ExecStart=/usr/bin/stdbuf -oL @PREFIX@/out/prefix/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -s -R @PREFIX@/qcom
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target

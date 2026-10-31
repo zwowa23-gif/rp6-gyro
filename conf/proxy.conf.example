@@ -1,0 +1,9 @@
+# rp6gyrod global settings (re-read within a second). Per-game settings live in motion/profiles/<appid>.conf and
+# are managed by the Decky plugin; profile keys override the ones below.
+enabled=1
+compensation=2
+rotation_accel=1
+# axis inversion copied into newly created profiles
+invert_pitch=1
+invert_yaw=1
+invert_roll=1

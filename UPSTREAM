@@ -1,0 +1,3 @@
+# Pinned upstream revisions the patches apply to
+hexagonrpc https://github.com/linux-msm/hexagonrpc da7a3742ab8d5273a281b70ee11f16fb2cb6a690
+libssc https://codeberg.org/DylanVanAssche/libssc 033e2a32095c024d6dbdfb1d4ae1db4a94be32f1

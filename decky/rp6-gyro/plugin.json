@@ -1,0 +1,6 @@
+{
+  "name": "RP6 Gyro",
+  "author": "rp6-gyro contributors",
+  "flags": ["root"],
+  "api_version": 1
+}

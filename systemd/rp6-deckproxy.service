@@ -1,0 +1,16 @@
+[Unit]
+Description=RP6 gyro for Steam: Deck controller proxy with IMU (rp6gyrod)
+After=inputplumber.service armada-controller-type.service
+Wants=inputplumber.service
+RequiresMountsFor=@PREFIX@
+Before=display-manager.service
+
+[Service]
+ExecStart=@PREFIX@/out/rp6gyrod @PREFIX@/motion/proxy.conf @PREFIX@/motion/profiles
+# on any exit give the original controller back to Steam
+ExecStopPost=/bin/sh -c 'rm -f /run/rp6-gyro-proxy.active; udevadm trigger --action=change --subsystem-match=hidraw'
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

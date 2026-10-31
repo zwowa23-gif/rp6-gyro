@@ -1,0 +1,6 @@
+# Active only while rp6gyrod runs (it creates /run/rp6-gyro-proxy.active): hide InputPlumber's own Deck-style
+# controller (28de:12f0) so Steam only sees the proxy copy (HID_PHYS=rp6-gyro-proxy) that carries gyro/accel.
+SUBSYSTEM=="hidraw", KERNELS=="0003:28DE:12F0.*", TEST=="/run/rp6-gyro-proxy.active", IMPORT{parent}="HID_PHYS"
+SUBSYSTEM=="hidraw", KERNELS=="0003:28DE:12F0.*", TEST=="/run/rp6-gyro-proxy.active", ENV{HID_PHYS}=="rp6-gyro-proxy", GOTO="rp6_proxy_end"
+SUBSYSTEM=="hidraw", KERNELS=="0003:28DE:12F0.*", TEST=="/run/rp6-gyro-proxy.active", TAG-="uaccess", MODE="0600", OWNER="root", GROUP="root"
+LABEL="rp6_proxy_end"

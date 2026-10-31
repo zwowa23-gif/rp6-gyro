@@ -1,0 +1,12 @@
+[Unit]
+Description=RP6 IMU streamer (rp6imu in podman: QMI8658 via libssc -> UDP 127.0.0.1:47811)
+
+[Service]
+ExecStartPre=-/usr/bin/podman rm -f rp6imu
+ExecStart=/usr/bin/podman run --rm --name rp6imu --log-driver none --network host --env-file @PREFIX@/motion/imu.env -v @PREFIX@:/work:Z localhost/rp6ssc /work/out/rp6imu
+ExecStop=/usr/bin/podman stop -t 2 rp6imu
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

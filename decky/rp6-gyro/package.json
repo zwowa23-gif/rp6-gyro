@@ -1,0 +1,6 @@
+{
+  "name": "rp6-gyro",
+  "version": "1.0.0",
+  "description": "Retroid Pocket 6 gyroscope for Steam Input: per-game profiles, mouse or gamepad mode, calibration",
+  "type": "module"
+}
